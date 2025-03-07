@@ -149,9 +149,18 @@ A powerful and user-friendly Discord Rich Presence customization tool built with
 
 > [!CAUTION]
 > ## Security
+> ### Client ID Security
 > - Never share your Client ID publicly
-> - Use .env file for Client ID storage
+>   - If someone gets your Client ID, they can:
+>     - Create unauthorized Rich Presence activities using your application
+>     - Potentially abuse your application's rate limits
+>     - Impersonate your application on Discord
+> - Always store your Client ID in the `.env` file
 > - Keep your Discord application credentials secure
+> - If you suspect your Client ID has been compromised:
+>   1. Go to Discord Developer Portal
+>   2. Delete the compromised application
+>   3. Create a new application with a new Client ID
 
 ## Contributing
 Contributions are welcome! Please feel free to submit pull requests to the [GitHub repository](https://github.com/i358/dRPC).
