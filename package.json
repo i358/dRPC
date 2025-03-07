@@ -1,0 +1,52 @@
+{
+  "name": "drpc",
+  "version": "1.0.0",
+  "description": "🎮 A powerful Electron-based Discord Rich Presence customization tool with real-time updates, custom images, buttons, and party information support.",
+  "main": "dist/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "npm run build:main && npm run build:renderer",
+    "build:main": "tsc -p tsconfig.json",
+    "build:renderer": "tsc -p tsconfig.renderer.json",
+    "watch": "tsc -w",
+    "lint": "eslint . --ext .ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/i358/dRPC.git"
+  },
+  "keywords": [
+    "discord",
+    "rich-presence",
+    "electron",
+    "typescript",
+    "discord-rpc",
+    "game-presence",
+    "discord-rich-presence"
+  ],
+  "author": {
+    "name": "i358",
+    "url": "https://github.com/i358"
+  },
+  "bugs": {
+    "url": "https://github.com/i358/dRPC/issues"
+  },
+  "homepage": "https://github.com/i358/dRPC#readme",
+  "license": "MIT",
+  "dependencies": {
+    "discord-rpc": "^4.0.1",
+    "dotenv": "^16.3.1",
+    "electron-store": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/discord-rpc": "^4.0.8",
+    "@types/node": "^20.10.5",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "electron": "^28.0.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  }
+}

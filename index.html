@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Rich Presence Emulator</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="titlebar">
+      <div class="titlebar-drag">Discord Rich Presence Emulator</div>
+      <div class="window-controls">
+        <button class="window-control minimize" id="minimize-btn">
+          <i class="fas fa-window-minimize"></i>
+        </button>
+        <button class="window-control maximize" id="maximize-btn">
+          <i class="fas fa-window-maximize"></i>
+        </button>
+        <button class="window-control close" id="close-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <header>
+        <h1>Discord Rich Presence Emulator</h1>
+        <div id="status" class="status disconnected">Waiting for Connection</div>
+      </header>
+
+      <div class="card" id="connection-card">
+        <h2>Discord Connection</h2>
+        <div class="form-group">
+          <label for="client-id">Client ID</label>
+          <div class="input-with-button">
+            <input type="text" id="client-id" placeholder="Enter your Client ID from Discord Developer Portal">
+            <button id="load-env-btn" class="small-button" title="Load Client ID from .env file">
+              <i class="fas fa-file-import"></i> .env
+            </button>
+          </div>
+          
+          <div class="button-group">
+            <button id="connect-btn">Connect</button>
+            <button id="disconnect-btn" class="danger hidden">Disconnect</button>
+          </div>
+        </div>
+        <div id="user-info" class="hidden">
+          <p>Connected Account: <span id="username">-</span></p>
+        </div>
+      </div>
+
+      <div class="card" id="activity-card">
+        <h2>Rich Presence Settings</h2>
+        
+        <div class="form-group">
+          <label for="details">Details Line</label>
+          <input type="text" id="details" placeholder="Details line (can be left empty)">
+        </div>
+        
+        <div class="form-group">
+          <label for="state">State Line</label>
+          <input type="text" id="state" placeholder="State line (can be left empty)">
+        </div>
+        
+        <div class="form-group">
+          <label for="large-image-key">Large Image Key</label>
+          <input type="text" id="large-image-key" placeholder="Large image key (can be left empty)">
+        </div>
+        
+        <div class="form-group">
+          <label for="large-image-text">Large Image Text</label>
+          <input type="text" id="large-image-text" placeholder="Large image text (can be left empty)">
+        </div>
+        
+        <div class="form-group">
+          <label for="small-image-key">Small Image Key</label>
+          <input type="text" id="small-image-key" placeholder="Small image key (can be left empty)">
+        </div>
+        
+        <div class="form-group">
+          <label for="small-image-text">Small Image Text</label>
+          <input type="text" id="small-image-text" placeholder="Small image text (can be left empty)">
+        </div>
+        
+        <div class="form-group">
+          <label for="button1-label">Button 1 Label</label>
+          <input type="text" id="button1-label" placeholder="Button 1 label (can be left empty)">
+        </div>
+        
+        <div class="form-group">
+          <label for="button1-url">Button 1 URL</label>
+          <input type="text" id="button1-url" placeholder="Button 1 URL (can be left empty)">
+        </div>
+        
+        <div class="form-group">
+          <label for="button2-label">Button 2 Label</label>
+          <input type="text" id="button2-label" placeholder="Button 2 label (can be left empty)">
+        </div>
+        
+        <div class="form-group">
+          <label for="button2-url">Button 2 URL</label>
+          <input type="text" id="button2-url" placeholder="Button 2 URL (can be left empty)">
+        </div>
+        
+        <div class="form-group">
+          <label for="party-size">Current Party Size</label>
+          <input type="number" id="party-size" min="1" value="1">
+        </div>
+        
+        <div class="form-group">
+          <label for="party-max">Maximum Party Size</label>
+          <input type="number" id="party-max" min="1" value="5">
+        </div>
+        
+        <div class="form-group">
+          <label>Elapsed Time</label>
+          <div class="elapsed-time-container">
+            <div class="elapsed-time-inputs">
+              <input type="number" id="elapsed-hours" min="0" placeholder="Hours" class="time-input">
+              <span class="time-separator">:</span>
+              <input type="number" id="elapsed-minutes" min="0" max="59" placeholder="Minutes" class="time-input">
+              <span class="time-separator">:</span>
+              <input type="number" id="elapsed-seconds" min="0" max="59" placeholder="Seconds" class="time-input">
+            </div>
+            <button id="set-time-btn" class="small-button">Set</button>
+          </div>
+          <p id="elapsed-time">-</p>
+        </div>
+        
+        <div class="button-group">
+          <button id="update-btn">Update</button>
+          <button id="reset-btn">Reset</button>
+        </div>
+      </div>
+
+      <div class="card" id="party-card">
+        <h2>Party Information</h2>
+        <div class="info-group">
+          <label>Party ID:</label>
+          <p id="party-id">-</p>
+        </div>
+        <div class="info-group">
+          <label>Join Secret:</label>
+          <p id="join-secret">-</p>
+        </div>
+        <div class="info-group">
+          <label>Match Secret:</label>
+          <p id="match-secret">-</p>
+        </div>
+        <div class="notifications" id="notifications">
+          <!-- Notifications will be added here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="dist/renderer/renderer.js"></script>
+</body>
+</html> 
