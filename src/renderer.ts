@@ -173,18 +173,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 // * Load Client ID from .env file
 async function handleLoadEnvClientId(): Promise<void> {
   try {
-    console.log('Loading Client ID from .env file');
+    console.log('Load from .env button clicked');
+    console.log('Calling window.electronAPI.loadEnvClientId()');
+    
+    if (!window.electronAPI || !window.electronAPI.loadEnvClientId) {
+      console.error('loadEnvClientId method is not available');
+      addNotification('Error: loadEnvClientId method is not available', 'error');
+      return;
+    }
+    
     const envClientId = await window.electronAPI.loadEnvClientId();
+    console.log('Received Client ID from .env file:', envClientId ? 'Found' : 'Not found');
     
     if (envClientId) {
       clientIdInput.value = envClientId;
       addNotification('Client ID loaded from .env file', 'join');
     } else {
-      addNotification('CLIENT_ID not found in .env file', 'error');
+      addNotification('CLIENT_ID not found in .env file. Make sure it exists and is properly formatted.', 'error');
     }
   } catch (error) {
     console.error('Error loading Client ID from .env file:', error);
-    addNotification('Error loading Client ID from .env file', 'error');
+    addNotification('Error loading Client ID from .env file. Check console for details.', 'error');
   }
 }
 

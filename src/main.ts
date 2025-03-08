@@ -107,21 +107,54 @@ function createWindow(): void {
   ipcMain.handle('load-env-client-id', () => {
     console.log('Loading Client ID from .env file');
     
-    if (fs.existsSync(envPath)) {
-      config({ path: envPath });
-      const envClientId = process.env.CLIENT_ID as string;
-      console.log('Loaded Client ID from .env:', envClientId);
+    // Try multiple possible paths for .env file
+    const possiblePaths = [
+      path.join(process.cwd(), '.env'),
+      path.join(app.getAppPath(), '.env'),
+      path.join(__dirname, '..', '.env')
+    ];
+    
+    console.log('Checking possible .env paths:');
+    for (const envPath of possiblePaths) {
+      console.log(`- ${envPath} (exists: ${fs.existsSync(envPath)})`);
       
-      if (envClientId) {
-        return envClientId;
-      } else {
-        console.warn('CLIENT_ID not found in .env file');
-        return '';
+      if (fs.existsSync(envPath)) {
+        try {
+          // Force reload the .env file
+          const envContent = fs.readFileSync(envPath, 'utf8');
+          console.log('.env file content length:', envContent.length);
+          
+          // Parse manually to ensure we get the latest value
+          const envLines = envContent.split('\n');
+          for (const line of envLines) {
+            if (line.startsWith('CLIENT_ID=')) {
+              const clientId = line.substring('CLIENT_ID='.length).trim();
+              console.log('Found CLIENT_ID in .env file:', clientId);
+              
+              if (clientId) {
+                // Return the found clientId
+                return clientId;
+              }
+            }
+          }
+          
+          // If we didn't find it by parsing, try dotenv
+          config({ path: envPath });
+          const envClientId = process.env.CLIENT_ID as string;
+          console.log('Loaded Client ID from .env using dotenv:', envClientId);
+          
+          if (envClientId) {
+            // Return the found clientId
+            return envClientId;
+          }
+        } catch (error) {
+          console.error('Error reading .env file:', error);
+        }
       }
-    } else {
-      console.warn('.env file not found');
-      return '';
     }
+    
+    console.warn('CLIENT_ID not found in any .env file');
+    return '';
   });
 
   mainWindow.on('closed', () => {
